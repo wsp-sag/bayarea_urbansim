@@ -37,7 +37,7 @@ def average_random_N_dfs(dfs, N):
 def variability_measure(dfs, N, M):
     assert N * M < len(dfs)
     # take samples of the datafarmes and do an average
-    average_dfs = [average_taz_summaries(dfs[i*M:(i+1)*M])
+    average_dfs = [average_taz_summaries(dfs[i * M:(i + 1) * M])
                    for i in range(N)]
 
     # stack the dataframes so that every cell is now a column

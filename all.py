@@ -1,11 +1,12 @@
 import os
 import re
+import sys
+
 import numpy as np
 
 for i in range(50):
     os.system("python baus.py --mode simulation")
 
-import sys
 sys.exit()
 
 with open('RUNNUM', 'r') as f:

@@ -1,18 +1,54 @@
-language: python
+language: generic
+sudo: false
+os:
+  - linux
+  - osx
+  - windows
+env:
+  - PYTHON_VERSION="2.7"
+  - PYTHON_VERSION="3.6"
 
-python:
-  - '2.7'
-  - '3.6'
+filter_secrets: false
 
 install:
-  - pip install .  # baus and requirements
-  - pip install coverage pycodestyle pytest  # testing tools
-  - pip list
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      MINICONDA_OS="MacOSX";
+      brew install gnu-sed;
+      gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
+    else
+      MINICONDA_OS="Linux";
+      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
+    fi
+  - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
 
+  - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
+      choco install openssl.light;
+      wget -nv https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe;
+      pwd;
+      echo "install miniconda";
+      echo 'start /wait "" Miniconda3-latest-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=%UserProfile%\Miniconda3 ' > miniconda-installer-noniteractive.bat;
+      cmd < ./miniconda-installer-noniteractive.bat;
+      ls ~;
+      ls ~/Miniconda3;
+      source ~/Miniconda3/etc/profile.d/conda.sh;
+    else
+      wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda;
+      export PATH="$HOME/miniconda/bin:$PATH";
+    fi
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda env create -f environment.yml
+  - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
+      conda activate bayarea_urbansim;
+    else
+      source activate bayarea_urbansim;
+    fi
+  - conda install -y pycodestyle
+  - conda install -y pytest
 script:
   - pycodestyle baus
   - pycodestyle scripts
-  - coverage run --source baus --module pytest --verbose
-
-after_success:
-  - coverage report
+  - pytest baus

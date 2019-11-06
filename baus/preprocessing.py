@@ -205,39 +205,38 @@ def correct_baseyear_vacancies(buildings, parcels, jobs, store):
     # this is the maximum vacancy you can have any a building so it NOT the
     # same thing as setting the vacancy for the entire county
     SURPLUS_VACANCY_COUNTY = buildings_county.map({
-       "Alameda": .42,
-       "Contra Costa": .57,
-       "Marin": .28,
-       "Napa": .7,
-       "San Francisco": .08,
-       "San Mateo": .4,
-       "Santa Clara": .32,
-       "Solano": .53,
-       "Sonoma": .4
+        "Alameda": .42,
+        "Contra Costa": .57,
+        "Marin": .28,
+        "Napa": .7,
+        "San Francisco": .08,
+        "San Mateo": .4,
+        "Santa Clara": .32,
+        "Solano": .53,
+        "Sonoma": .4
     }).fillna(.2)
 
     SURPLUS_VACANCY_JURIS = buildings_juris.map({
-       "Berkeley": .65,
-       "Atherton": 0.05,
-       "Belvedere": 0,
-       "Corte Madera": 0,
-       "Cupertino": .1,
-       "Healdsburg": 0,
-       "Larkspur": 0,
-       "Los Altos Hills": 0,
-       "Los Gatos": 0,
-       "Monte Sereno": 0,
-       "Piedmont": 0,
-       "Portola Valley": 0,
-       "Ross": 0,
-       "San Anselmo": 0,
-       "Saratoga": 0,
-       "Woodside": 0,
-       "Alameda": .2
+        "Berkeley": .65,
+        "Atherton": 0.05,
+        "Belvedere": 0,
+        "Corte Madera": 0,
+        "Cupertino": .1,
+        "Healdsburg": 0,
+        "Larkspur": 0,
+        "Los Altos Hills": 0,
+        "Los Gatos": 0,
+        "Monte Sereno": 0,
+        "Piedmont": 0,
+        "Portola Valley": 0,
+        "Ross": 0,
+        "San Anselmo": 0,
+        "Saratoga": 0,
+        "Woodside": 0,
+        "Alameda": .2
     })
 
-    SURPLUS_VACANCY = pd.DataFrame([
-       SURPLUS_VACANCY_COUNTY, SURPLUS_VACANCY_JURIS]).min()
+    SURPLUS_VACANCY = pd.DataFrame([SURPLUS_VACANCY_COUNTY, SURPLUS_VACANCY_JURIS]).min()
 
     # count of jobs by building
     job_counts_by_building = jobs.building_id.value_counts().\
@@ -245,7 +244,7 @@ def correct_baseyear_vacancies(buildings, parcels, jobs, store):
 
     # with SURPLUS_VACANCY vacancy
     job_counts_by_building_surplus = \
-        (job_counts_by_building * (SURPLUS_VACANCY+1)).astype('int')
+        (job_counts_by_building * (SURPLUS_VACANCY + 1)).astype('int')
 
     # min of job spaces and vacancy
     correct_job_spaces = pd.DataFrame([
@@ -306,23 +305,23 @@ def preproc_buildings(store, parcels, manual_edits):
         "two": df.residential_sqft + df.non_residential_sqft}).max(axis=1)
 
     df["building_type"] = df.building_type_id.map({
-      0: "O",
-      1: "HS",
-      2: "HT",
-      3: "HM",
-      4: "OF",
-      5: "HO",
-      6: "SC",
-      7: "IL",
-      8: "IW",
-      9: "IH",
-      10: "RS",
-      11: "RB",
-      12: "MR",
-      13: "MT",
-      14: "ME",
-      15: "PA",
-      16: "PA2"
+        0: "O",
+        1: "HS",
+        2: "HT",
+        3: "HM",
+        4: "OF",
+        5: "HO",
+        6: "SC",
+        7: "IL",
+        8: "IW",
+        9: "IH",
+        10: "RS",
+        11: "RB",
+        12: "MR",
+        13: "MT",
+        14: "ME",
+        15: "PA",
+        16: "PA2"
     })
 
     del df["building_type_id"]  # we won't use building type ids anymore

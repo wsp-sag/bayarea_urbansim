@@ -38,8 +38,8 @@ def profit_to_prob_func(df):
 @orca.injectable(cache=True)
 def coffer(settings):
     d = {
-        "vmt_res_acct":  accounts.Account("vmt_res_acct"),
-        "vmt_com_acct":  accounts.Account("vmt_com_acct")
+        "vmt_res_acct": accounts.Account("vmt_res_acct"),
+        "vmt_com_acct": accounts.Account("vmt_com_acct")
     }
 
     for key, acct in settings["acct_settings"]["lump_sum_accounts"].items():
@@ -117,7 +117,8 @@ def inclusionary_housing_revenue_reduction(feasibility, units):
     def value_can_afford(monthly_payment):
         # this is a 10 year average freddie mac interest rate
         ten_year_average_interest = .055
-        return np.npv(ten_year_average_interest/12, [monthly_payment]*30*12)
+        return np.npv(ten_year_average_interest / 12,
+                      [monthly_payment] * 30 * 12)
 
     value_can_afford = {k: value_can_afford(v) for k, v in
                         monthly_affordable_payment.to_dict().items()}
@@ -125,7 +126,7 @@ def inclusionary_housing_revenue_reduction(feasibility, units):
 
     # account for interest and property taxes
     interest_and_prop_taxes = .013
-    value_can_afford /= 1+interest_and_prop_taxes
+    value_can_afford /= 1 + interest_and_prop_taxes
 
     # there's a lot more nuance to inclusionary percentages than this -
     # e.g. specific neighborhoods get specific amounts -
@@ -229,7 +230,7 @@ def policy_modifications_of_profit(feasibility, parcels):
             bins = s["bins"]
             pcts = bins["pcts"]
             # need to boud the breaks with a reasonable low and high goalpost
-            breaks = [-1]+bins["breaks"]+[2]
+            breaks = [-1] + bins["breaks"] + [2]
 
             pzc = orca.get_table("parcels_zoning_calculations")
             s = pzc.zoned_build_ratio
@@ -419,7 +420,7 @@ def subsidized_office_developer(feasibility, coffer, acct_settings, year,
             "index": dev_id
         }
 
-        coffer["vmt_com_acct"].add_transaction(-1*amt, subaccount="regional",
+        coffer["vmt_com_acct"].add_transaction(-1 * amt, subaccount="regional",
                                                metadata=metadata)
 
         total_subsidy -= amt
@@ -538,7 +539,7 @@ def run_subsidized_developer(feasibility, parcels, buildings, households,
     # large projects never get built, because it could be a 100 unit project
     # times a 500k subsidy per unit.  thus we're going to try filtering by
     # the maximum subsidy for a single development here
-    feasibility = feasibility[feasibility.max_profit > -50*1000000]
+    feasibility = feasibility[feasibility.max_profit > -50 * 1000000]
 
     # step 4
     feasibility['subsidy_per_unit'] = \
@@ -582,7 +583,7 @@ def run_subsidized_developer(feasibility, parcels, buildings, households,
 
         # step 8
         print("Amount in subaccount: ${:,.2f}".format(amount))
-        num_bldgs = int((-1*df.max_profit).cumsum().searchsorted(amount))
+        num_bldgs = int((-1 * df.max_profit).cumsum().searchsorted(amount))
 
         if num_bldgs == 0:
             continue
@@ -669,7 +670,7 @@ def run_subsidized_developer(feasibility, parcels, buildings, households,
 
         new_buildings_list.append(new_buildings)
 
-    total_len = reduce(lambda x, y: x+len(y), new_buildings_list, 0)
+    total_len = reduce(lambda x, y: x + len(y), new_buildings_list, 0)
     if total_len == 0:
         print("No subsidized buildings")
         return
@@ -677,7 +678,7 @@ def run_subsidized_developer(feasibility, parcels, buildings, households,
     new_buildings = pd.concat(new_buildings_list)
     print("Built {} total subsidized buildings".format(len(new_buildings)))
     print("    Total subsidy: ${:,.2f}".
-          format(-1*new_buildings.max_profit.sum()))
+          format(-1 * new_buildings.max_profit.sum()))
     print("    Total subsidized units: {:.0f}".
           format(new_buildings.residential_units.sum()))
 
@@ -717,7 +718,7 @@ def subsidized_residential_feasibility(
 
     # add the multiindex back
     feasibility.columns = pd.MultiIndex.from_tuples(
-            [("residential", col) for col in feasibility.columns])
+        [("residential", col) for col in feasibility.columns])
 
     feasibility = policy_modifications_of_profit(feasibility, parcels)
 
@@ -789,8 +790,7 @@ def subsidized_residential_developer_lump_sum_accts(
                                  form_to_btype_func,
                                  add_extra_columns_func,
                                  summary,
-                                 create_deed_restricted=acct[
-                                    "subsidize_affordable"],
+                                 create_deed_restricted=acct["subsidize_affordable"],
                                  policy_name=acct["name"])
 
         buildings = orca.get_table("buildings")

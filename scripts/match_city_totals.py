@@ -67,7 +67,7 @@ movers = pd.concat([pd.Series(hh_ids), pd.Series(movers)])
 # households we're over the target
 def make_city_list(overfull):
 
-    move_hhs = sum([[x]*y for (x, y) in
+    move_hhs = sum([[x] * y for (x, y) in
                    zip(list(overfull.index), list(overfull.values))],
                    [])
     move_hhs = pd.Series(move_hhs)

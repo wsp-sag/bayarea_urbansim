@@ -32,14 +32,14 @@ def elcm_simulate(jobs, buildings, aggregations, elcm_config):
 @orca.step()
 def households_transition(households, household_controls, year, settings):
     s = orca.get_table('households').base_income_quartile.value_counts()
-    print("Distribution by income before:\n", (s/s.sum()))
+    print("Distribution by income before:\n", (s / s.sum()))
     ret = utils.full_transition(households,
                                 household_controls,
                                 year,
                                 settings['households_transition'],
                                 "building_id")
     s = orca.get_table('households').base_income_quartile.value_counts()
-    print("Distribution by income after:\n", (s/s.sum()))
+    print("Distribution by income after:\n", (s / s.sum()))
     return ret
 
 
@@ -192,7 +192,9 @@ def proportional_elcm(jobs, households, buildings, parcels,
         columns=['juris', 'zone_id', 'general_type', 'vacant_job_spaces'])
 
     buildings_df = buildings_df.rename(columns={
-      'zone_id_x': 'zone_id', 'general_type_x': 'general_type'})
+                                       'zone_id_x': 'zone_id',
+                                       'general_type_x': 'general_type'
+                                       })
 
     # location options are vacant job spaces in retail buildings - this will
     # overfill certain location because we don't have enough space
@@ -409,7 +411,7 @@ def supply_and_demand_multiplier_func(demand, supply):
     clip_change_high = supply_correction["kwargs"]["clip_change_high"]
     t = s
     t -= 1.0
-    t = t / t.max() * (clip_change_high-1)
+    t = t / t.max() * (clip_change_high - 1)
     t += 1.0
     s.loc[s > 1.0] = t.loc[s > 1.0]
     return s, (s <= 1.0).all()
@@ -636,7 +638,7 @@ def retail_developer(jobs, buildings, parcels, nodes, feasibility,
     # combine features in probability function - it's like combining expense
     # of building the building with the market in the neighborhood
     p = f1 * 1.5 + f2
-    p = p.clip(lower=1.0/len(p)/10)
+    p = p.clip(lower=1.0 / len(p) / 10)
 
     print("Attempting to build {:,} retail sqft".format(target))
 
@@ -812,7 +814,7 @@ def developer_reprocess(buildings, year, years_per_iter, jobs,
         print(res_units[res_units < 0])
         add_indexes = np.random.choice(res_units.index.values, size=to_add,
                                        replace=True,
-                                       p=(res_units/res_units.sum()))
+                                       p=(res_units / res_units.sum()))
         # collect same indexes
         add_indexes = pd.Series(add_indexes).value_counts()
         # this is sqft per job for residential bldgs
@@ -827,8 +829,7 @@ def developer_reprocess(buildings, year, years_per_iter, jobs,
     # the second step here is to add retail to buildings that are greater than
     # X stories tall - presumably this is a ground floor retail policy
     old_buildings = buildings.to_frame(buildings.local_columns)
-    new_buildings = old_buildings.query(
-       '%d == year_built and stories >= 4' % year)
+    new_buildings = old_buildings.query('%d == year_built and stories >= 4' % year)
 
     print("Attempting to add ground floor retail to %d devs" %
           len(new_buildings))
@@ -910,7 +911,7 @@ def proportional_job_allocation(parcel_id):
             continue
 
         sectors = np.random.choice(job_dist.index, size=num_new_jobs,
-                                   p=job_dist/job_dist.sum())
+                                   p=job_dist / job_dist.sum())
         new_jobs = pd.DataFrame({"empsix": sectors, "building_id": index})
         # make sure index is incrementing
         new_jobs.index = new_jobs.index + 1 + np.max(all_jobs.index.values)

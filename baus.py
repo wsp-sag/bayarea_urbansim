@@ -315,7 +315,7 @@ def run_models(MODE, SCENARIO):
 
         # start the simulation in the next round - only the models above run
         # for the IN_YEAR
-        years_to_run = range(IN_YEAR+EVERY_NTH_YEAR, OUT_YEAR+1,
+        years_to_run = range(IN_YEAR + EVERY_NTH_YEAR, OUT_YEAR + 1,
                              EVERY_NTH_YEAR)
         models = get_simulation_models(SCENARIO)
         orca.run(models, iter_vars=years_to_run)
@@ -373,7 +373,6 @@ def run_models(MODE, SCENARIO):
     else:
 
         raise "Invalid mode"
-
 
 
 print("Started", time.ctime())

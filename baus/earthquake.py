@@ -186,7 +186,7 @@ def eq_code_buildings(buildings, year, scenario, settings):
                 c = 'NN'
                 # alternative if retrofitted: d = 'R'
             d = 'N'
-            code_i = a+b+c+d
+            code_i = a + b + c + d
             code.append(code_i)
 
             # assign a fragility coefficient based on building code
@@ -240,7 +240,7 @@ def eq_code_buildings(buildings, year, scenario, settings):
         # generate random number, multiply by fragilities
         buildings = orca.get_table('buildings')
         rand_eq = np.random.random(len(buildings))
-        destroy_eq = pd.Series(rand_eq*fragility)
+        destroy_eq = pd.Series(rand_eq * fragility)
         orca.add_column('buildings', 'eq_destroy', destroy_eq)
 
         # generate random number for fire
@@ -313,7 +313,7 @@ def earthquake_demolish(parcels, parcels_tract, tracts_earthquake, buildings,
                 retrofit_bldgs = top_build_frag_bldgs[top_build_frag_bldgs.
                                                       earthquake_code.isin
                                                       (retrofit_codes)]
-                retro_no = int(round(float(len(retrofit_bldgs))/2))
+                retro_no = int(round(float(len(retrofit_bldgs)) / 2))
                 retrofit_set = np.random.choice(retrofit_bldgs.index,
                                                 retro_no, replace=False)
                 # update top_build_frag to remove retrofit buildings
@@ -347,7 +347,7 @@ def earthquake_demolish(parcels, parcels_tract, tracts_earthquake, buildings,
                     new_pct = .05
                 # randomly select buildings to be destroyed based on
                 # percentages
-                new_no = int(round(len(buildings_new)*new_pct))
+                new_no = int(round(len(buildings_new) * new_pct))
                 buildings_new_rand = np.random.choice(buildings_new.index,
                                                       new_no, replace=False)
                 # add to a list of buildings to destroy

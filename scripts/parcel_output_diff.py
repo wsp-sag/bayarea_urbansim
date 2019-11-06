@@ -33,7 +33,7 @@ for ind, row in scen.iterrows():
         prevrow = prevrow.iloc[0]
 
         def close(v1, v2, tol):
-            return abs(v1-v2) < tol
+            return abs(v1 - v2) < tol
 
         if not close(row.residential_units,
                      prevrow.residential_units, 2.5) or \
@@ -47,7 +47,6 @@ for ind, row in scen.iterrows():
             cnt3 += 1
 
 print "%d new developments and %d changed developments (%d unchanged)" % \
-  (cnt1, cnt2, cnt3)
+      (cnt1, cnt2, cnt3)
 
-base = pd.DataFrame(rows).\
-  to_csv("runs/run%d_parcel_output_diff.csv" % int(args[0]))
+base = pd.DataFrame(rows).to_csv("runs/run%d_parcel_output_diff.csv" % int(args[0]))

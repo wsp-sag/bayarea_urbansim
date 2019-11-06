@@ -20,11 +20,11 @@ numpy_arrays = mon.query(
     'places',
     {'collectionId': 'ZC7yyAyA8jkDFnRtf'},
     columns,
-    ['float32']*len(columns)
+    ['float32'] * len(columns)
 )
 
 df = np.matrix(numpy_arrays).transpose()
 df = pd.DataFrame(df, columns=columns)
 
-print time.time()-t1
+print time.time() - t1
 print df.describe()

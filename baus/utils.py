@@ -164,7 +164,7 @@ def round_series_match_target(s, target, fillna=np.nan):
 def scale_by_target(s, target, check_close=None):
     ratio = float(target) / s.sum()
     if check_close:
-        assert 1.0-check_close < ratio < 1.0+check_close
+        assert 1.0 - check_close < ratio < 1.0 + check_close
     return s * ratio
 
 
@@ -238,7 +238,7 @@ def simple_ipf(seed_matrix, col_marginals, row_marginals, tolerance=1, cnt=0):
         return seed_matrix
 
     return simple_ipf(seed_matrix, col_marginals, row_marginals,
-                      tolerance, cnt+1)
+                      tolerance, cnt + 1)
 
 
 """
@@ -279,7 +279,7 @@ def small_vals(df):
     df = df.copy()
 
     for col in df.columns:
-        df[col] = df[col] < df[col].mean() - .5*df[col].std()
+        df[col] = df[col] < df[col].mean() - .5 * df[col].std()
 
     return df
 
@@ -303,7 +303,7 @@ def compare_dfs_excel(df1, df2, excelname="out.xlsx"):
     worksheet = writer.sheets['comparison']
     worksheet.set_zoom(150)
 
-    color_range = "B2:Z{}".format(len(df1)+1)
+    color_range = "B2:Z{}".format(len(df1) + 1)
 
     reds = palettable.colorbrewer.sequential.Blues_5.hex_colors
     reds = {
@@ -323,18 +323,18 @@ def compare_dfs_excel(df1, df2, excelname="out.xlsx"):
 
         for (lab, col), val in filter(s).iteritems():
 
-            rowind = df.index.get_loc(lab)+2
-            colind = df.columns.get_loc(col)+1
+            rowind = df.index.get_loc(lab) + 2
+            colind = df.columns.get_loc(col) + 1
             colletter = xlsxwriter.utility.xl_col_to_name(colind)
 
-            worksheet.write(colletter+str(rowind), val, format)
+            worksheet.write(colletter + str(rowind), val, format)
 
     for i in range(5):
-        apply_format(worksheet, df3, reds[i], lambda s: s[s > i*10+10])
+        apply_format(worksheet, df3, reds[i], lambda s: s[s > i * 10 + 10])
 
     df3[small_vals(df1)] = np.nan
     for i in range(5):
-        apply_format(worksheet, df3, blues[i], lambda s: s[s > i*10+10])
+        apply_format(worksheet, df3, blues[i], lambda s: s[s > i * 10 + 10])
 
     writer.save()
 

@@ -166,8 +166,7 @@ def nrh_config():
 
 
 def get_config_file(type):
-    configs = orca.get_injectable('settings')['model_configs'][type.
-                                                               split('_')[0]]
+    configs = orca.get_injectable('settings')['model_configs'][type.split('_')[0]]
     sc = orca.get_injectable('scenario')
     sc_cfg = 's{}_{}_config'.format(sc, type)
     gen_cfg = '{}_config'.format(type)

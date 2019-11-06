@@ -48,7 +48,7 @@ df["zoningmodcat"] = orca.get_table("parcels_geography").zoningmodcat
 df["tpp"] = orca.get_table("parcels_geography").tpp_id
 
 for use in ["retail", "residential"]:
-    df[use+"_is_allowed"] = orca.get_injectable("parcel_is_allowed_func")(use)
+    df[use + "_is_allowed"] = orca.get_injectable("parcel_is_allowed_func")(use)
 
 settings = orca.get_injectable("settings")
 
