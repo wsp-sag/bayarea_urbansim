@@ -721,7 +721,7 @@ def building_purchase_price_sqft(parcels, settings):
     # developer model comes into play
     for form in ["Office", "Retail", "Industrial", "Residential"]:
         # convert to price per sqft from yearly rent per sqft
-        factor = 1.4 if form == "Residential" else (1/cap_rate)
+        factor = 1.4 if form == "Residential" else (1 / cap_rate)
         # raise cost to convert from industrial
         if form == "Industrial":
             factor *= 3.0
@@ -1079,7 +1079,7 @@ def zoned_du_underbuild(parcels, parcels_zoning_calculations):
 def zoned_du_build_ratio(parcels, parcels_zoning_calculations):
     # ratio of existing res built space to zoned res built space
     s = parcels.total_residential_units / \
-       (parcels_zoning_calculations.effective_max_dua * parcels.parcel_acres)
+        (parcels_zoning_calculations.effective_max_dua * parcels.parcel_acres)
     return s.replace(np.inf, 1).clip(0, 1)
 
 

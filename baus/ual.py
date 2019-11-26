@@ -159,9 +159,9 @@ def assign_tenure_to_units(residential_units, households):
     units.loc[rent, 'tenure'] = 'rent'
 
     print "Init unit tenure assignment: %d%% owner occupied, %d%% unfilled" % \
-        (round(len(units[units.tenure == 'own'])*100 /
+        (round(len(units[units.tenure == 'own']) * 100 /
          len(units[units.tenure.notnull()])),
-         round(len(units[units.tenure.isnull()])*100 / len(units)))
+         round(len(units[units.tenure.isnull()]) * 100 / len(units)))
 
     # Fill remaining units with random tenure assignment
     # TO DO: Make this weighted by existing allocation, rather than 50/50
@@ -669,7 +669,7 @@ def rrh_simulate(residential_units, aggregations, settings, rrh_config):
                            out_fname='unit_residential_rent')
 
     _mtc_clip(residential_units, 'unit_residential_rent',
-              settings, price_scale=0.05/12)
+              settings, price_scale=0.05 / 12)
     return
 
 
@@ -755,8 +755,7 @@ def hlcm_simulate(households, residential_units, aggregations,
                               out_fname='unit_id',
                               supply_fname='num_units',
                               vacant_fname='vacant_units',
-                              enable_supply_correction=settings.get(
-                                equilibration_name, None),
+                              enable_supply_correction=settings.get(equilibration_name, None),
                               cast=True)
 
 

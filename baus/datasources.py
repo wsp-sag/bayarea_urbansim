@@ -91,7 +91,7 @@ def limits_settings(policy, scenario):
     d = policy['development_limits']
 
     if scenario in d.keys():
-        print "Using limits for scenario: %s" % scenario
+        print("Using limits for scenario: %s" % scenario)
         assert "default" in d
 
         d_scen = d[scenario]
@@ -102,7 +102,7 @@ def limits_settings(policy, scenario):
 
         return d
 
-    print "Using default limits"
+    print("Using default limits")
     return d["default"]
 
 
@@ -115,24 +115,24 @@ def inclusionary_housing_settings(policy, scenario):
 
     if (scenario in ["11", "12", "15"]) and\
        (scenario not in policy["inclusionary_fr2_enable"]):
-        print "Using Futures Round 1 (PBA40) inclusionary settings"
+        print("Using Futures Round 1 (PBA40) inclusionary settings")
         fr1 = str(int(scenario) - 10)
         s = s[fr1]
 
     elif scenario in s.keys():
-        print "Using inclusionary settings for scenario: %s" % scenario
+        print("Using inclusionary settings for scenario: %s" % scenario)
         s = s[scenario]
 
     elif "default" in s.keys():
-        print "Using default inclusionary settings"
+        print("Using default inclusionary settings")
         s = s["default"]
 
     d = {}
     for item in s:
         # this is a list of cities with an inclusionary rate that is the
         # same for all the cities in the list
-        print "Setting inclusionary rates for %d cities to %.2f" %\
-            (len(item["values"]), item["amount"])
+        print("Setting inclusionary rates for %d cities to %.2f" %
+              (len(item["values"]), item["amount"]))
         # this is a list of inclusionary rates and the cities they apply
         # to - need tro turn it in a map of city names to rates
         for juris in item["values"]:
@@ -225,7 +225,7 @@ def fetch_from_s3(settings):
         file = os.path.join("data", file)
         if os.path.exists(file):
             continue
-        print "Downloading " + file
+        print("Downloading " + file)
         key = bucket.get_key(file, validate=False)
         key.get_contents_to_filename(file)
 
@@ -564,6 +564,7 @@ def get_logsum_file(type='mandatory'):
             else:
                 return orca.get_injectable('previous_{}_logsum_file'
                                            .format(type))
+    # FIXME: What is the exception that could occur above?
     except:
         if 'logsum' in logsums:
             ls = logsums['logsum']
@@ -618,7 +619,7 @@ def get_dev_projects_table(scenario, parcels):
 
     cnts = df.geom_id.isin(parcels.geom_id).value_counts()
     if False in cnts.index:
-        print "%d MISSING GEOMIDS!" % cnts.loc[False]
+        print("%d MISSING GEOMIDS!" % cnts.loc[False])
 
     df = df[df.geom_id.isin(parcels.geom_id)]
 
@@ -669,10 +670,10 @@ def development_projects(parcels, mapping, scenario):
     df = df.dropna(subset=["year_built"])
     df = df[df.action.isin(["add", "build"])]
 
-    print "Describe of development projects"
+    print("Describe of development projects")
     # this makes sure dev projects has all the same columns as buildings
     # which is the point of this method
-    print df[orca.get_table('buildings').local_columns].describe()
+    print(df[orca.get_table('buildings').local_columns].describe())
 
     return df
 

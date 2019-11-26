@@ -2,15 +2,15 @@ import pandas as pd
 from pandas import ExcelWriter
 
 counties_numbers_to_names = {
-  3: "Santa Clara",
-  4: "Alameda",
-  5: "Contra Costa",
-  2: "San Mateo",
-  8: "Sonoma",
-  1: "San Francisco",
-  6: "Solano",
-  9: "Marin",
-  7: "Napa"
+    3: "Santa Clara",
+    4: "Alameda",
+    5: "Contra Costa",
+    2: "San Mateo",
+    8: "Sonoma",
+    1: "San Francisco",
+    6: "Solano",
+    9: "Marin",
+    7: "Napa"
 }
 
 counties_map = pd.read_csv("data/taz_geography.csv", index_col="zone").\
@@ -30,7 +30,7 @@ for run in range(1308, 1312):
         groupby("county").net_units.sum()
     growthnotinpdas = df[(df.building_type_id <= 3) & (df.pda.isnull())].\
         groupby("county").net_units.sum()
-    pctgrowthinpdas = growthinpdas / (growthnotinpdas+growthinpdas)
+    pctgrowthinpdas = growthinpdas / (growthnotinpdas + growthinpdas)
     print pctgrowthinpdas
 
     baseyear = pd.read_csv("output/baseyear_taz_summaries_2010.csv")
