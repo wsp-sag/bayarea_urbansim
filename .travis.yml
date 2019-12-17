@@ -4,6 +4,7 @@ python:
   - '2.7'
   - '3.6'
 install:
+  - npm install -g gulp-cli
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
     else
@@ -18,7 +19,7 @@ install:
   - sed -i -E 's/(python=)(.*)/\1'$TRAVIS_PYTHON_VERSION'/' ./environment.yml
   - conda env create -f environment.yml
   - source activate bayarea_urbansim
-  - conda install -y pep8
+  - conda install -y pycodestyle
   - conda install -y pytest
 script:
   - pycodestyle baus
