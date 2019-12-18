@@ -1,8 +1,8 @@
 language: generic
 sudo: false
 os:
-  - linux
-  - osx
+#  - linux
+#  - osx
   - windows
 env:
   - PYTHON_VERSION="2.7"
@@ -24,8 +24,13 @@ install:
     fi
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
   - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.$MINICONDA_EXT -O miniconda.$MINICONDA_EXT;
-  - bash miniconda.$MINICONDA_EXT -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
+  - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
+      mkdir $HOME/miniconda;
+      miniconda.exe /S /D=$HOME/miniconda;
+    else
+      bash miniconda.sh -b -p $HOME/miniconda;
+      export PATH="$HOME/miniconda/bin:$PATH";
+    fi
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
