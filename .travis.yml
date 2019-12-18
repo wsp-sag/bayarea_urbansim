@@ -7,7 +7,7 @@ env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then MINICONDA_OS="MacOS"; else MINICONDA_OS="Linux"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then MINICONDA_OS="MacOSX"; else MINICONDA_OS="Linux"; fi
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
   - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
