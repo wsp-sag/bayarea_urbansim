@@ -7,7 +7,14 @@ env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
 install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then MINICONDA_OS="MacOSX"; else MINICONDA_OS="Linux"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      MINICONDA_OS="MacOSX";
+      brew install gnu-sed;
+      gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml
+    else
+      MINICONDA_OS="Linux";
+      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml
+    fi
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
   - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
@@ -17,7 +24,6 @@ install:
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda info -a
-  - sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml
   - conda env create -f environment.yml
   - source activate bayarea_urbansim
   - conda install -y pycodestyle
