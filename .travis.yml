@@ -1,11 +1,15 @@
 language: python
 sudo: false
+os:
+  - linux
+  - osx
 python:
   - "2.7"
   - "3.6"
 install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then MINICONDA_OS="MacOS"; else MINICONDA_OS="Linux"; fi
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
-  - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-Linux-x86_64.sh -O miniconda.sh;
+  - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
