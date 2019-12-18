@@ -20,9 +20,9 @@ install:
 
   - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
       if [[ "$PYTHON_VERSION" == "2.7" ]]; then
-        choco install http://chocolatey.org/api/v2/package/miniconda --params="'/AddToPath:1'" --params="'/S'";
+        choco install -y -s http://chocolatey.org/api/v2/package/miniconda --params="'/AddToPath:1'" --params="'/S'";
       else
-        choco install http://chocolatey.org/api/v2/package/miniconda3 --params="'/AddToPath:1'" --params="'/S'" -y;
+        choco install -y -s http://chocolatey.org/api/v2/package/miniconda3 --params="'/AddToPath:1'" --params="'/S'";
       fi
     else
       wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
