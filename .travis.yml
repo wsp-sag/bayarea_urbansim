@@ -23,8 +23,6 @@ install:
 
   - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
       choco install miniconda -y -s ./Miniconda.4.3.21.nupkg --params="'/AddToPath'";
-      #choco install miniconda3 -y -s ./miniconda3.4.7.12.1.nupkg --params="'/AddToPath'";
-      echo $ToolsDir
     else
       wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
