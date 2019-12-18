@@ -15,7 +15,8 @@ before_install:
   - npm install -g gulp-cli
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA_OS=Linux; else MINICONDA_OS=MacOSX; fi
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then PY_VERSION="2"; else PY_VERSION="3"; fi
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then PY_VERSION=2; else PY_VERSION=3; fi
+  - echo https://repo.continuum.io/miniconda/Miniconda$PY_VERION-latest-$MINICONDA_OS-x86_64.sh
   - wget https://repo.continuum.io/miniconda/Miniconda$PY_VERION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p "$HOME"/miniconda
   - source "$HOME"/miniconda/etc/profile.d/conda.sh
