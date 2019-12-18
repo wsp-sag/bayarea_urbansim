@@ -6,28 +6,23 @@ jobs:
       python: 2.7
     - os: linux
       python: 3.6
-    - os: osx
-      python: 2.7
-    - os: osx
-      python: 3.6
+#    - os: osx
+#      python: 2.7
+#    - os: osx
+#      python: 3.6
 before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
-  - npm install -g gulp-cli
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA_OS=Linux; else MINICONDA_OS=MacOSX; fi
   - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then PY_VERSION=2; else PY_VERSION=3; fi
-  - echo https://repo.continuum.io/miniconda/Miniconda$PY_VERSION-latest-$MINICONDA_OS-x86_64.sh
   - wget https://repo.continuum.io/miniconda/Miniconda$PY_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p "$HOME"/miniconda
   - source "$HOME"/miniconda/etc/profile.d/conda.sh
-  - conda config --set always_yes yes --set changeps1 no --set auto_update_conda false --set notify_outdated_conda false
+  - conda config --set always_yes yes --set changeps1 no
   - sed -i -E 's/(python=)(.*)/\1'$TRAVIS_PYTHON_VERSION'/' ./environment.yml
   - conda info -a
   - export LANG=en_US.UTF-8
-  - export COVERAGE_DIR=":$HOME/htmlcov"
   - printenv | sort
-
-before_script:
   - conda env create -f environment.yml
   - source activate bayarea_urbansim
   - conda install -y pycodestyle
