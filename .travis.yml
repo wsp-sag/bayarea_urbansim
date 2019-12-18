@@ -22,7 +22,7 @@ install:
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
 
   - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
-      choco install miniconda3 -y -s ./Miniconda.4.3.21.nupkg --params="'/AddToPath:1'" --params="'/S'";
+      choco install miniconda -y -s ./Miniconda.4.3.21.nupkg --params="'/AddToPath:1'" --params="'/S'";
     else
       wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
