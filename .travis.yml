@@ -10,10 +10,10 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       MINICONDA_OS="MacOSX";
       brew install gnu-sed;
-      gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml
+      gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     else
       MINICONDA_OS="Linux";
-      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml
+      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     fi
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
   - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
