@@ -10,24 +10,22 @@ env:
 install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       MINICONDA_OS="MacOSX";
-      MINICONDA_EXT="sh";
       brew install gnu-sed;
       gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
-    elif [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
-      MINICONDA_OS="Windows";
-      MINICONDA_EXT="exe";
-      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     else
       MINICONDA_OS="Linux";
-      MINICONDA_EXT="sh";
       sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     fi
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
-  - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.$MINICONDA_EXT -O miniconda.$MINICONDA_EXT;
+
   - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
-      mkdir $HOME/miniconda;
-      miniconda.exe /S /D=$HOME/miniconda;
+      if [[ "$PYTHON_VERSION" == "2.7" ]]; then
+        choco install miniconda;
+      else
+        choco install miniconda3;
+      fi
     else
+      wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
       export PATH="$HOME/miniconda/bin:$PATH";
     fi
