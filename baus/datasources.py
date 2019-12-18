@@ -564,6 +564,7 @@ def get_logsum_file(type='mandatory'):
             else:
                 return orca.get_injectable('previous_{}_logsum_file'
                                            .format(type))
+    # FIXME: What is the exception that could occur above?
     except:
         if 'logsum' in logsums:
             ls = logsums['logsum']

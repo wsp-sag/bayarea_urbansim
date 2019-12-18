@@ -67,12 +67,13 @@ movers = pd.concat([pd.Series(hh_ids), pd.Series(movers)])
 # households we're over the target
 def make_city_list(overfull):
 
-    move_hhs = sum([[x]*y for (x, y) in
+    move_hhs = sum([[x] * y for (x, y) in
                    zip(list(overfull.index), list(overfull.values))],
                    [])
     move_hhs = pd.Series(move_hhs)
     move_hhs = move_hhs.sample(len(move_hhs))  # random reorder
     return move_hhs
+
 
 juris_destinations = make_city_list(underfull)
 building_destinations = [

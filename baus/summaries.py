@@ -59,7 +59,7 @@ def config(policy, inputs, run_number, scenario, parcels,
     mand_acc_fname_2010 = orca.get_injectable("mand_acc_file_2010")
     write("2010 mandatory accessibility file used: %s"
           % mand_acc_fname_2010)
-    ma_fname_2030 = "logsum_2030_s"+scenario
+    ma_fname_2030 = "logsum_2030_s" + scenario
     if ma_fname_2030 in inputs["logsums"]["mandatory"]:
         write("2030 mandatory accessibility file used: %s"
               % inputs["logsums"]["mandatory"][ma_fname_2030])
@@ -69,7 +69,7 @@ def config(policy, inputs, run_number, scenario, parcels,
     nonmand_acc_fname_2010 = orca.get_injectable("nonmand_acc_file_2010")
     write("2010 non-mandatory accessibility file used: %s"
           % nonmand_acc_fname_2010)
-    nma_fname_2030 = "logsum_2030_s"+scenario
+    nma_fname_2030 = "logsum_2030_s" + scenario
     if nma_fname_2030 in inputs["logsums"]["mandatory"]:
         write("2030 non-mandatory accessibility file used: %s"
               % inputs["logsums"]["non_mandatory"][nma_fname_2030])
@@ -79,7 +79,7 @@ def config(policy, inputs, run_number, scenario, parcels,
     acc_seg_fname_2010 = orca.get_injectable("acc_seg_file_2010")
     write("2010 accessibility segmentation file used: %s"
           % acc_seg_fname_2010)
-    acc_seg_fname_2030 = "logsum_2030_s"+scenario
+    acc_seg_fname_2030 = "logsum_2030_s" + scenario
     if acc_seg_fname_2030 in inputs["logsums"]["segmentation"]:
         write("2030 accessibility segmentation file used: %s"
               % inputs["logsums"]["segmentation"][acc_seg_fname_2030])
@@ -135,14 +135,14 @@ def config(policy, inputs, run_number, scenario, parcels,
             geog = policy_loc["alternate_buildings_filter"] if \
                 "alternate_buildings_filter" in policy_loc else \
                 policy_loc["alternate_adjustment_formula"]
-            write(policy_nm+" is activated with formula: {}".format(geog))
+            write(policy_nm + " is activated with formula: {}".format(geog))
         elif scenario in policy_loc["enable_in_scenarios"]:
             geog = policy_loc["receiving_buildings_filter"] if \
                 "receiving_buildings_filter" in policy_loc else \
                 policy_loc["profitability_adjustment_formula"]
-            write(policy_nm+" is activated with formula: {}".format(geog))
+            write(policy_nm + " is activated with formula: {}".format(geog))
         else:
-            write(policy_nm+" is not activated")
+            write(policy_nm + " is not activated")
 
     write("FUTURES ROUND 1 FORCES")
     write("")
@@ -171,7 +171,7 @@ def config(policy, inputs, run_number, scenario, parcels,
     write("")
 
     # development projects list
-    scen = "scen"+scenario
+    scen = "scen" + scenario
     if scen in development_projects.columns:
         write("Scenario is in development projects list")
     else:
@@ -271,10 +271,10 @@ def config(policy, inputs, run_number, scenario, parcels,
     counties = ["alameda", "contra_costa", "marin", "napa", "san_mateo",
                 "san_francisco", "santa_clara", "solano", "sonoma"]
     for county in counties:
-            policy_loc = (policy["acct_settings"]["lump_sum_accounts"]
-                          [county+"_bond_settings"]["enable_in_scenarios"])
-            if scenario in policy_loc:
-                counter += 1
+        policy_loc = (policy["acct_settings"]["lump_sum_accounts"]
+                      [county + "_bond_settings"]["enable_in_scenarios"])
+        if scenario in policy_loc:
+            counter += 1
     write("Affordable housing bonds are activated for %d counties" % counter)
 
     # workplace preferences are in the development projects list
@@ -309,7 +309,7 @@ def topsheet(households, jobs, buildings, parcels, zones, year,
     hhincome_by_intpp = households_df.income.groupby(
         households_df.tpp_id.notnull()).mean()
     # round to nearest 100s
-    hhincome_by_intpp = (hhincome_by_intpp/100).round()*100
+    hhincome_by_intpp = (hhincome_by_intpp / 100).round() * 100
 
     jobs_by_subregion = misc.reindex(taz_geography.subregion,
                                      jobs.zone_id).value_counts()
@@ -359,7 +359,7 @@ def topsheet(households, jobs, buildings, parcels, zones, year,
 
     def norm_and_round(s):
         # normalize and round a series
-        return str((s/s.sum()).round(2))
+        return str((s / s.sum()).round(2))
 
     nhh = len(households)
     write("Number of households = %d" % nhh)
@@ -378,7 +378,7 @@ def topsheet(households, jobs, buildings, parcels, zones, year,
 
     du = buildings.residential_units.sum()
     write("Number of residential units in buildings table = %d" % du)
-    write("Residential vacancy rate = %.2f" % (1-0 - float(nhh)/du))
+    write("Residential vacancy rate = %.2f" % (1 - 0 - float(nhh) / du))
 
     write("Number of residential units in units table = %d"
           % len(residential_units))
@@ -400,7 +400,7 @@ def topsheet(households, jobs, buildings, parcels, zones, year,
 
     jsp = buildings.job_spaces.sum()
     write("Number of job spaces = %d" % jsp)
-    write("Non-residential vacancy rate = %.2f" % (1-0 - float(nj)/jsp))
+    write("Non-residential vacancy rate = %.2f" % (1 - 0 - float(nj) / jsp))
 
     tmp = base_year_measures["hh_by_subregion"]
     write("Households base year share by subregion:\n%s" %
@@ -532,7 +532,7 @@ def compare_to_targets(parcels, buildings, jobs, households, abag_targets,
 
     # compute correlection for pda and juris, for households and for jobs
 
-    l = []
+    target_compare_list = []
 
     df = pd.DataFrame()
 
@@ -542,7 +542,7 @@ def compare_to_targets(parcels, buildings, jobs, households, abag_targets,
 
             abag_distribution = abag_targets.groupby(geo)[typ].sum()
 
-            df["abag_"+geo+"_"+typ] = abag_distribution
+            df["abag_" + geo + "_" + typ] = abag_distribution
 
             agents = {
                 "households": households_df,
@@ -552,11 +552,11 @@ def compare_to_targets(parcels, buildings, jobs, households, abag_targets,
             baus_distribution = agents.groupby(geo).size().\
                 reindex(abag_distribution.index).fillna(0)
 
-            df["baus_"+geo+"_"+typ] = baus_distribution
+            df["baus_" + geo + "_" + typ] = baus_distribution
 
             assert len(abag_distribution) == len(baus_distribution)
 
-            l.append((geo, typ, abag_distribution.corr(baus_distribution)))
+            target_compare_list.append((geo, typ, abag_distribution.corr(baus_distribution)))
 
     if write_comparison_dfs:
 
@@ -566,7 +566,7 @@ def compare_to_targets(parcels, buildings, jobs, households, abag_targets,
         df.to_csv(os.path.join("runs", "run%d_targets_comparison_%d.csv" %
                   (run_number, year)))
 
-    return l
+    return target_compare_list
 
 
 @orca.step()
@@ -1241,11 +1241,11 @@ def travel_model_output(parcels, households, jobs, buildings,
         "runs/run{}_county_summaries_{}.csv".format(run_number, year))
 
     # add region marginals
-    pd.DataFrame(data={'REGION': [1],
-                       'gq_num_hh_region': [tot_gqpop]}).to_csv(
-                 "runs/run{}_regional_marginals_{}.csv".format(run_number,
-                                                               year),
-                 index=False)
+    pd.DataFrame(data={
+        'REGION': [1],
+        'gq_num_hh_region': [tot_gqpop]}
+    ).to_csv("runs/run{}_regional_marginals_{}.csv".format(run_number, year),
+             index=False)
 
 
 @orca.step()
