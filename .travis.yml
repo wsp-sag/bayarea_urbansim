@@ -3,6 +3,7 @@ sudo: false
 os:
   - linux
   - osx
+  - windows
 env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
@@ -11,6 +12,9 @@ install:
       MINICONDA_OS="MacOSX";
       brew install gnu-sed;
       gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
+    elif [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
+      MINICONDA_OS="Windows";
+      sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     else
       MINICONDA_OS="Linux";
       sed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
