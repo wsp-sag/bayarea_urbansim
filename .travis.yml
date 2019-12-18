@@ -4,11 +4,8 @@ python:
   - '2.7'
   - '3.6'
 install:
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then $PYTHON_VERSION='2'; else $PYTHON_VERSION='3'; fi
+  - wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
@@ -19,7 +16,7 @@ install:
   - sed -i -E 's/(python=)(.*)/\1'$TRAVIS_PYTHON_VERSION'/' ./environment.yml
   - conda env create -f environment.yml
   - source activate bayarea_urbansim
-  - conda install -y pep8
+  - conda install -y pycodestyle
   - conda install -y pytest
 script:
   - pycodestyle baus
