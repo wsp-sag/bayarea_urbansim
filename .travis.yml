@@ -25,9 +25,9 @@ install:
       wget -nv https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe;
       pwd;
       echo "install miniconda";
-      'echo ''start /wait "" Miniconda3-latest-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=%UserProfile%\Miniconda3 '' > miniconda-installer-noniteractive.bat';
-      cat miniconda-installer-noniteractive.bat;
-      ./miniconda-installer-noniteractive.bat;
+      echo 'start /wait "" Miniconda3-latest-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D=%UserProfile%\Miniconda3 ' > miniconda-installer-noniteractive.bat;
+      #cat miniconda-installer-noniteractive.bat;
+      cmd <./miniconda-installer-noniteractive.bat;
       ls ~;
       ls ~/Miniconda3;
       source ~/Miniconda3/etc/profile.d/conda.sh;
