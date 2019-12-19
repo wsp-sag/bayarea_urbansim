@@ -42,7 +42,11 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   - conda env create -f environment.yml
-  - source activate bayarea_urbansim
+  - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
+      conda activate bayarea_urbansim;
+    else
+      source activate bayarea_urbansim;
+    fi
   - conda install -y pycodestyle
   - conda install -y pytest
 script:
