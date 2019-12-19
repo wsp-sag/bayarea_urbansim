@@ -1,9 +1,9 @@
 language: generic
 sudo: false
 os:
-  - linux
-  - osx
-#  - windows
+#  - linux
+#  - osx
+  - windows
 env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
@@ -22,12 +22,15 @@ install:
   - if [[ "$PYTHON_VERSION" == "2.7" ]]; then PYTHON_VERSION="2"; else PYTHON_VERSION="3"; fi
 
   - if [[ "$TRAVIS_OS_NAME" == 'windows' ]]; then
-      wget -O $ChocolateyToolsLocation/miniconda.exe https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe;
-      $ChocolateyToolsLocation/miniconda.exe //S //D=$ChocolateyToolsLocation/miniconda;
-      echo $ChocolateyToolsLocation;
-      cd $ChocolateyToolsLocation;
-      ls;
-      export PATH="$ChocolateyToolsLocation/miniconda:$PATH";
+      wget -nv https://repo.continuum.io/miniconda/Miniconda3-latest-Windows-x86_64.exe;
+      pwd;
+      echo "install miniconda";
+      echo ' start /wait "" Miniconda3-latest-Windows-x86_64.exe /InstallationType=AllUsers /AddToPath=1 /RegisterPython=1 /S /D %UserProfile%\Miniconda3 ' > miniconda-installer-noninteractive.bat;
+      cat miniconda-installer-noninteractive.bat;
+      ./miniconda-installer-noninteractive.bat;
+      ls ~;
+      ls ~/Miniconda3;
+      source ~/Miniconda3/etc/profile.d/conda.sh;
     else
       wget http://repo.continuum.io/miniconda/Miniconda$PYTHON_VERSION-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh;
       bash miniconda.sh -b -p $HOME/miniconda;
