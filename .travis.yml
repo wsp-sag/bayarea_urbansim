@@ -1,12 +1,12 @@
 language: generic
 sudo: false
 os:
-  - linux
-  - osx
+  #- linux
+  #- osx
   - windows
 env:
   - PYTHON_VERSION="2.7"
-  - PYTHON_VERSION="3.6"
+  #- PYTHON_VERSION="3.6"
 
 filter_secrets: false
 
