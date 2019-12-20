@@ -20,11 +20,11 @@ dependencies:
   - toolz
   - requests
   - zbox
-  - pytables::conda-forge
+  - conda-forge::pytables
   - pygments
   - pandana
   - pip
-  - snappy::conda-forge
+  - conda-forge::snappy
   - zbox
   - pip:
 #    - git+https://github.com/UDST/orca.git@f49398e2a363f8869e14b5218640d8d9c13863a4
