@@ -1,0 +1,30 @@
+name: bayarea_urbansim
+channels:
+  - conda-forge
+dependencies:
+  - python=3.6
+  - bottle
+  - cython
+  - geopandas
+  - fiona
+  - matplotlib
+  - numexpr
+  - numpy
+  - osmnet
+  - pandas
+  - pip
+  - prettytable
+  - pyproj
+  - pytables=3.4.2
+  - pyyaml
+  - requests
+  - scikit-learn
+  - shapely
+  - simplejson
+  - statsmodels==0.10.*
+  - zbox
+  - pip:
+    - orca
+    - pandana
+    - urbansim
+    - urbansim_defaults
