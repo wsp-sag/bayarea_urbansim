@@ -1,6 +1,7 @@
 name: bayarea_urbansim
 channels:
   - conda-forge
+  - udst
 dependencies:
   - python=3.6
   - bottle
