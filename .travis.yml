@@ -1,9 +1,9 @@
-language: generic
+language: bash
 sudo: false
 os: 
  - osx
-# - linux
-# - windows
+ - linux
+ - windows
 env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
