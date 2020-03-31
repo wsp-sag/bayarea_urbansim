@@ -1,9 +1,9 @@
-language: generic
+language: python
 sudo: false
-os:
-  - linux
-  - osx
-  - windows
+os: 
+ - osx
+ - linux
+ - windows
 env:
   - PYTHON_VERSION="2.7"
   - PYTHON_VERSION="3.6"
@@ -14,6 +14,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       MINICONDA_OS="MacOSX";
       brew install gnu-sed;
+      brew reinstall gcc --without-multilib;
       gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     else
       MINICONDA_OS="Linux";
