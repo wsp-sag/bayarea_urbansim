@@ -14,8 +14,6 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       MINICONDA_OS="MacOSX";
       brew install gnu-sed;
-      xcode-select --install;
-      conda install llvm-openmp clang;
       gsed -i -E 's/(python=)(.*)/\1'$PYTHON_VERSION'/' ./environment.yml;
     else
       MINICONDA_OS="Linux";

@@ -13,6 +13,7 @@ dependencies:
   - numpy
   - osmnet
   - pandas
+  - pandana
   - pip
   - prettytable
   - pyproj
@@ -26,6 +27,6 @@ dependencies:
   - zbox
   - pip:
     - orca
-    - pandana
+#    - pandana
     - urbansim
     - urbansim_defaults
