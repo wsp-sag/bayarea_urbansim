@@ -5,9 +5,10 @@ DRAFT Bay Area UrbanSim (BAUS) Implementation
 
 This is the DRAFT UrbanSim implementation for the Bay Area. Policy documentation for the Bay Area model is available [here](http://data.mtc.ca.gov/bayarea_urbansim/) and documentation for the UrbanSim framework is available [here](https://udst.github.io/urbansim/).
 
-* Install Python for your OS ([Anaconda](https://www.continuum.io/downloads) highly suggested)
+* Install Python for your using [Anaconda](https://www.continuum.io/downloads)
 * Clone this repository
-* Install dependencies using `pip install -r requirements.txt` (may need to uncomment out pandana)
+* Install an appropriate virtual environment using `conda env create -f environment.yml`
+  - <i>If you want to install a Python 2.7 environment, edit the environment.yml file and switch the Python version to 2.7</i>
 * Get data using `python baus.py -c --mode fetch_data` (you will need an appropriately configured AWS credentials file which you must get from your MTC contact)
 * Preprocess data using `python baus.py -c --mode preprocessing`
 * Run a simulation using `python baus.py -c` (default mode is simulation)
